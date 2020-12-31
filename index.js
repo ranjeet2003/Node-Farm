@@ -2,7 +2,10 @@ const fs = require("fs");
 const http = require("http");
 const url = require("url");
 
+const slugify = require('slugify');
+
 const replaceTemplate = require('./modules/replaceTemplate');
+
 // //Blocking synchronous
 // const textIn = fs.readFileSync('./txt/input.txt', 'utf-8');
 // console.log(textIn);
@@ -28,6 +31,10 @@ const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.htm
 
 const dataObj = JSON.parse(data);
 
+const slugs = dataObj.map(el => slugify(el.productName, {lower: true}));
+console.log(slugs);
+
+// console.log(slugify('Fresh Avacado', {lower: true}))
 const server = http.createServer((req, res) => {
 	const {query, pathname} = url.parse(req.url, true)
   	
